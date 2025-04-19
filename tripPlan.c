@@ -400,11 +400,11 @@ void printRoute(RouteNode *route) {
             printf("  %04d %s\n", minutesToTime(current->arrivalMinutes), landmarks[current->toLandmark].name);
         }
         
-        if (current->next != NULL) {
+        current = current->next;
+        // 只有当后面还有节点时才添加换行符
+        if (current != NULL) {
             printf("\n");
         }
-        
-        current = current->next;
     }
 }
 
