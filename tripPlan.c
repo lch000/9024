@@ -373,13 +373,8 @@ RouteNode* findRoute(int fromLandmark, int toLandmark, int departureMinutes) {
 // 打印路径
 void printRoute(RouteNode *route) {
     RouteNode *current = route;
-    int count = 0;
     
     while (current != NULL) {
-        if (count > 0) { 
-            printf("\n");
-        }
-        
         if (current->type == WALK) {
             printf("Walk %d minute(s):\n", current->duration);
             printf("  %04d %s\n", minutesToTime(current->departureMinutes), landmarks[current->fromLandmark].name);
@@ -391,7 +386,6 @@ void printRoute(RouteNode *route) {
         }
         
         current = current->next;
-        count++;
     }
 }
 

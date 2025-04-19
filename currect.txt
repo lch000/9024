@@ -1,0 +1,24 @@
+Number of landmarks: Number of walking links: Number of ferry schedules: 
+ From: To: Departure time: 
+ Walk 17 minute(s):
+   0000 Barrangaroo
+   0017 TheRocks
+ Walk 16 minute(s):
+   0017 TheRocks
+   0033 SydneyHarbourBridge
+ 
+ From: To: Departure time: 
+ Walk 16 minute(s):
+   0000 SydneyHarbourBridge
+   0016 TheRocks
+ Walk 8 minute(s):
+   0016 TheRocks
+   0024 CircularQuay
+ Walk 6 minute(s):
+   0024 CircularQuay
+   0030 SydneyOperaHouse
+ Walk 9 minute(s):
+   0030 SydneyOperaHouse
+   0039 RoyalBotanicGardens
+ 
+ From: Happy travels!
