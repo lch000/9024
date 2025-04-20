@@ -38,70 +38,65 @@ Tree newNode(Item it) {
    return new;
 }
 
+// 声明辅助函数
 Tree rotateRight(Tree);
 Tree rotateLeft(Tree);
-Tree insertRec(Tree, Item);
-Tree balanceTree(Tree);
-Tree flipColors(Tree); 
+Tree insertR(Tree, Item);  // 修复函数声明
+void flipColors(Tree);  // 只是改变颜色，不改变结构
 
-// insert a new item into a tree
+// 插入新节点到红黑树
 Tree TreeInsert(Tree t, Item it) {
-   t = insertRec(t, it);
-   colour(t) = BLACK;  // 保证根节点是黑色
+   // 执行插入
+   t = insertR(t, it);
+   
+   // 确保根节点为黑色
+   colour(t) = BLACK;
+   
    return t;
 }
 
-// 递归插入节点
-Tree insertRec(Tree t, Item it) {
-   if (t == NULL)
+// 辅助插入函数
+Tree insertR(Tree h, Item it) {
+   // 基本情况：到达叶子节点位置，创建新节点
+   if (h == NULL) {
       return newNode(it);
-      
-   if (it < data(t))
-      left(t) = insertRec(left(t), it);
-   else if (it > data(t))
-      right(t) = insertRec(right(t), it);
-   
-   // 插入后进行平衡调整
-   return balanceTree(t);
-}
-
-// 调整红黑树平衡
-Tree balanceTree(Tree t) {
-   // 情况3：右子节点为黑色（或NULL），左子节点和左-左子节点都是红色
-   if (isRed(left(t)) && isRed(left(left(t))) && !isRed(right(t)))
-      t = rotateRight(t);
-   
-   // 情况4：左子节点为黑色（或NULL），右子节点和右-右子节点都是红色
-   if (!isRed(left(t)) && isRed(right(t)) && isRed(right(right(t))))
-      t = rotateLeft(t);
-   
-   // 情况2：左右子节点都是红色
-   if (isRed(left(t)) && isRed(right(t)))
-      t = flipColors(t);
-   
-   // 情况5：左子节点和左-右子节点都是红色
-   if (isRed(left(t)) && !isRed(left(left(t))) && isRed(left(right(t)))) {
-      left(t) = rotateLeft(left(t));
-      t = rotateRight(t);
-      t = flipColors(t);
    }
    
-   // 情况6：右子节点和右-左子节点都是红色
-   if (isRed(right(t)) && isRed(right(left(t))) && !isRed(right(right(t)))) {
-      right(t) = rotateRight(right(t));
-      t = rotateLeft(t);
-      t = flipColors(t);
+   // 递归插入
+   if (it < data(h)) {
+      left(h) = insertR(left(h), it);
+   } else if (it > data(h)) {
+      right(h) = insertR(right(h), it);
+   } else {
+      // 键已存在，不做修改
+      return h;
    }
    
-   return t;
+   // 修复红黑树性质
+   
+   // 情况1：右子节点为红色，左子节点为黑色
+   if (isRed(right(h)) && !isRed(left(h))) {
+      h = rotateLeft(h);
+   }
+   
+   // 情况2：左子节点为红色，左-左子节点为红色
+   if (isRed(left(h)) && isRed(left(left(h)))) {
+      h = rotateRight(h);
+   }
+   
+   // 情况3：左右子节点都为红色
+   if (isRed(left(h)) && isRed(right(h))) {
+      flipColors(h);
+   }
+   
+   return h;
 }
 
-// 翻转节点颜色
-Tree flipColors(Tree t) {
-   colour(t) = RED;
-   colour(left(t)) = BLACK;
-   colour(right(t)) = BLACK;
-   return t;
+// 颜色翻转：父节点变红，两个子节点变黑
+void flipColors(Tree h) {
+   colour(h) = RED;
+   colour(left(h)) = BLACK;
+   colour(right(h)) = BLACK;
 }
 
 // check whether a key is in a Tree
